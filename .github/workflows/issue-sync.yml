@@ -7,9 +7,12 @@ jobs:
   sync-issue:
     runs-on: ubuntu-latest
     steps:
-      - name: Call endpoint
+      - name: Call payload endpoint
+        shell: bash
+        env:
+          PAYLOAD_URL: ${{ secrets.PAYLOAD_URL }}
         run: |
-          curl -sSL -X POST http://httpbin.org/post \
+          curl -sSL -X POST "$PAYLOAD_URL" \
             --data-urlencode 'title=${{ github.event.issue.title }}' \
             --data-urlencode 'body=${{ github.event.issue.body }}' \
             --data-urlencode 'url=${{ github.event.issue.html_url }}' \
